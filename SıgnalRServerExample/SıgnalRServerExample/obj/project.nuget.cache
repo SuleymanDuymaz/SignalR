@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "t6vKhQ9t+FPl0N0ykxHpsBJKPt5EGOBD8pFXxElognlrhtA3l0mmKF9e8UAec3GoiHNh0NcVvdFQTuB4F7bQFg==",
+  "dgSpecHash": "5UUDQykCEjemHX3N6mIFBCO3pQ/Ju5Gef0up7B3x8wNKa7YCw3mahfgKS6lUSqJdfFXU6yrwKORkatD6SP45PA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\sduym\\source\\repos\\SıgnalRServerExample\\SıgnalRServerExample\\SıgnalRServerExample.csproj",
+  "projectFilePath": "C:\\Users\\sduym\\source\\repos\\SignalR\\SıgnalRServerExample\\SıgnalRServerExample\\SıgnalRServerExample.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

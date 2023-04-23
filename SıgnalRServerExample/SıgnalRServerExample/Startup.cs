@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SıgnalRServerExample.Business;
 using SıgnalRServerExample.Hubs;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace SıgnalRServerExample
             services.AddCors(options =>options.AddDefaultPolicy(policy =>policy.AllowAnyMethod()
             .AllowAnyHeader().AllowCredentials().SetIsOriginAllowed(origin=>true)
             ));
+            services.AddTransient<MyBusiness>();
             services.AddSignalR();
         }
 
@@ -37,6 +39,7 @@ namespace SıgnalRServerExample
             {
                 //https://localhost:5001/myhub
                 endpoints.MapHub<MyHub>("/myhub");
+                
             });
         }
     }

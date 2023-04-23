@@ -6,60 +6,91 @@
     <script>
         $(document).ready(() => {
             const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/myhub")
-            .withAutomaticReconnect([1000,2000,3000,4000])//0 2 10 30 sn
-            .build();
+                .withAutomaticReconnect([1000, 2000, 3000, 4000])//0 2 10 30 sn
+                .build();
 
             connection.on("receiveMessage", message => {
-                $("messages").append(message + "<br>");
+                $("#messages").append(message + "<br>"); // değişiklik yapıldı
             });
-            async function start(){
-                try{
+
+            async function start() {
+                try {
                     await connection.start();
 
                 }
-                catch(error){
-                    setTimeout(()=>start(),2000);
+                catch (error) {
+                    setTimeout(() => start(), 2000);
                 }
-
             }
 
             start();
-           connection.onreconnecting(error=>{
+            function animation() {
+                durum.fadeIn(2000, () => {
+                    setTimeout(() => {
+                        durum.fadeOut(2000);
+                    }, 2000);
+                });
+            }
+            const durum = $("#durum");
 
-           })
-             connection.onreconnected(connectionId=>{
-            
-           })
+            connection.onreconnecting(error => {
+                durum.css("background-color", "blue");
+                durum.css("color", "white");
+                durum.html("Bağlantı kuruluyor....");
+                animation();
+            });
+
+            connection.onreconnected(() => {
+                durum.css("background-color", "green");
+                durum.css("color", "white");
+                durum.html("Bağlantı kuruldu");
+                animation();
+            });
+
+            connection.onclose(() => {
+                durum.css("background-color", "red");
+                durum.css("color", "white");
+                durum.html("Bağlantı koptu");
+                animation();
+            });
+
+            connection.on("userJoined", connectionId => {
+                durum.html('${connection} bağlandı');
+                durum.css("background-color", "blue");
+                animation();
+            });
+            connection.on("userLeaved", connectionId => {
+                durum.html('${connection} ayrıldı');
+                durum.css("background-color", "blue");
+                animation();
+            });
+            connection.on("clients", clientsData => {
+                let text = "";
+                $.each(clientsData, (index, item) => {
+                    text += `<li>${item}</li>`;
+                });
+                $("#clients").html(text);
+            });
 
 
             $("#btnGonder").click(() => {
-                    let message = $("#text").val();
-                    connection.invoke("SendMessageAsync", message)
-                        .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
-             });
-
-
-
-            /*
-
-            connection.start().then(() => { 
-                $("#btnGonder").click(() => {
-                    let message = $("#text").val();
-                    connection.invoke("SendMessageAsync", message)
-                        .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
-                });
+                let message = $("#text").val();
+                connection.invoke("SendMessageAsync", message)
+                    .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
             });
-             */
-
         });
-
-       
     </script>
 </head>
 <body>
-    <div id="connection" ></div>
+    <div id="durum" style="display:none"></div>
+    <div id="connection"></div>
     <input id="text">
     <button id="btnGonder">Gönder</button>
     <div id="messages"></div>
+    <div>
+        <ul id="clients">
+
+        </ul>
+    </div>
 </body>
 </html>
