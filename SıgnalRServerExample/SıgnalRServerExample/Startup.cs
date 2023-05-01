@@ -39,7 +39,9 @@ namespace SıgnalRServerExample
             {
                 //https://localhost:5001/myhub
                 endpoints.MapHub<MyHub>("/myhub");
-                
+                endpoints.MapHub<MessageHub>("/MessageHub");
+
+
             });
         }
     }

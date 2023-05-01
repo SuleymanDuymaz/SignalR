@@ -5,7 +5,9 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script>
         $(document).ready(() => {
-            const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/myhub")
+           // const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/myhub") this area using myhub class. right now ı m trying the another class
+            const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/MessageHub")
+
                 .withAutomaticReconnect([1000, 2000, 3000, 4000])//0 2 10 30 sn
                 .build();
 
@@ -53,17 +55,26 @@
                 durum.html("Bağlantı koptu");
                 animation();
             });
-
+            /*
+            kullanıcı katıldı
             connection.on("userJoined", connectionId => {
                 durum.html('${connection} bağlandı');
                 durum.css("background-color", "blue");
                 animation();
             });
+
+            */
+            /*
+            kullanıcı ayrıldı
             connection.on("userLeaved", connectionId => {
                 durum.html('${connection} ayrıldı');
                 durum.css("background-color", "blue");
                 animation();
             });
+            */
+
+           /*
+           ayrılan kullanıcılar
             connection.on("clients", clientsData => {
                 let text = "";
                 $.each(clientsData, (index, item) => {
@@ -71,20 +82,26 @@
                 });
                 $("#clients").html(text);
             });
-
+            */
 
             $("#btnGonder").click(() => {
                 let message = $("#text").val();
-                connection.invoke("SendMessageAsync", message)
+                let connectionIds= $("#connectionIds").val().split(",");
+                connection.invoke("SendMessageAsync", message, connectionIds    )
                     .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
+            });
+            connection.on("getConnectionId", (connectionId) => {
+                $("#connectionId").html(`Connection Id: ${connectionId}`);
             });
         });
     </script>
 </head>
 <body>
+    <div style="background-color:black;color:white" id="connectionId"></div>
     <div id="durum" style="display:none"></div>
     <div id="connection"></div>
     <input id="text">
+    <textarea id="connectionIds" cols="30" rows="10"></textarea>
     <button id="btnGonder">Gönder</button>
     <div id="messages"></div>
     <div>
