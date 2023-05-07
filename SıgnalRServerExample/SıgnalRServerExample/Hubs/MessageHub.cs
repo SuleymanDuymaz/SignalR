@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SıgnalRServerExample.Hubs
@@ -10,7 +11,9 @@ namespace SıgnalRServerExample.Hubs
         {
 
             // await Clients.Others.SendAsync("receiveMessage", message);
-            await Clients.AllExcept(connnectionIds).SendAsync("receiveMessage", message);
+           // await Clients.AllExcept(connnectionIds).SendAsync("receiveMessage", message);
+          // await Clients.Client(connnectionIds.First()).SendAsync("receiveMessage", message);
+          await Clients.Clients(connnectionIds).SendAsync("receiveMessage", message);
         }
 
         public override async Task OnConnectedAsync()
