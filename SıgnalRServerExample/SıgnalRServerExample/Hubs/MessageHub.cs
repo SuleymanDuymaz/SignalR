@@ -19,7 +19,7 @@ namespace SıgnalRServerExample.Hubs
         public override async Task OnConnectedAsync()
         {
             await Clients.Caller.SendAsync("getConnectionId", Context.ConnectionId);
-            //21.10
+            //group
         }
 
     }
