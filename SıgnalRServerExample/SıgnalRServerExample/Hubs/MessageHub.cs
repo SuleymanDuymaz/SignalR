@@ -14,6 +14,7 @@ namespace SıgnalRServerExample.Hubs
            // await Clients.AllExcept(connnectionIds).SendAsync("receiveMessage", message);
           // await Clients.Client(connnectionIds.First()).SendAsync("receiveMessage", message);
           await Clients.Clients(connnectionIds).SendAsync("receiveMessage", message);
+            //belirli clientlara veri gönderilir
         }
 
         public override async Task OnConnectedAsync()
