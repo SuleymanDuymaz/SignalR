@@ -16,7 +16,8 @@ namespace SıgnalRServerExample.Hubs
           // await Clients.Client(connnectionIds.First()).SendAsync("receiveMessage", message);
           await Clients.Clients(connnectionIds).SendAsync("receiveMessage", message);
            
-        }*/
+        }
+        */
 
         public async Task SendMessageAsync(string message,string groupName)
         {
