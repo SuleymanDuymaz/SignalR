@@ -7,6 +7,7 @@ namespace SıgnalRServerExample.Hubs
 {
     public class MessageHub:Hub
     {
+        /*
         public async Task SendMessageAsync(string message,IEnumerable<string> connnectionIds)
         {
 
@@ -14,9 +15,20 @@ namespace SıgnalRServerExample.Hubs
            // await Clients.AllExcept(connnectionIds).SendAsync("receiveMessage", message);
           // await Clients.Client(connnectionIds.First()).SendAsync("receiveMessage", message);
           await Clients.Clients(connnectionIds).SendAsync("receiveMessage", message);
-            //belirli clientlara veri gönderilir
+           
+        }*/
+
+        public async Task SendMessageAsync(string message,string groupName)
+        {
+
+            await Clients.Group(groupName).SendAsync("receiveMessage", message);
+
         }
 
+        public  async Task addGroup(string connectionId,string groupName)
+        {
+            await Groups.AddToGroupAsync(connectionId, groupName);
+        }
         public override async Task OnConnectedAsync()
         {
             await Clients.Caller.SendAsync("getConnectionId", Context.ConnectionId);

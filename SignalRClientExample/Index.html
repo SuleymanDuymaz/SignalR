@@ -83,21 +83,35 @@
                 $("#clients").html(text);
             });
             */
-
+            let _connectionId = "";
             $("#btnGonder").click(() => {
                 let message = $("#text").val();
                 let connectionIds= $("#connectionIds").val().split(",");
-                connection.invoke("SendMessageAsync", message, connectionIds    )
+               // connection.invoke("SendMessageAsync", message, connectionIds    )
+                   // .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
+                connection.invoke("SendMessageAsync", message, $("input[name=grup]:checked").val())
                     .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
+
             });
             connection.on("getConnectionId", (connectionId) => {
+                _connectionId = connectionId
                 $("#connectionId").html(`Connection Id: ${connectionId}`);
             });
+            $("#btnGrubaGir").click(() => {
+                let groupName = $("input[name=grup]:checked").val();
+                connection.invoke("addGroup", _connectionId, groupName).
+                    catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
+            });
+
         });
     </script>
 </head>
 <body>
     <div style="background-color:black;color:white" id="connectionId"></div>
+    <input type="radio" name="grup" value="A" /> A
+    <input type="radio" name="grup" value="B" /> B
+    <input type="radio" name="grup" value="C" /> C
+    <button id="btnGrubaGir">Gruba Gir</button>
     <div id="durum" style="display:none"></div>
     <div id="connection"></div>
     <input id="text">
