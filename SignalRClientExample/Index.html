@@ -92,8 +92,7 @@
                 // .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
                 //connection.invoke("SendMessageAsync", message, $("input[name=grup]:checked").val(), connectionIds)
                    // .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
-                connection.invoke("SendMessageAsync", message,groups
-                    .catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
+                connection.invoke("SendMessageAsync", message,groups).catch(error => console.log(`Mesaj gönderilirken hata oluştu. $(error)`));
 
             });
             connection.on("getConnectionId", (connectionId) => {

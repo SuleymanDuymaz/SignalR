@@ -23,7 +23,7 @@ namespace SıgnalRServerExample.Hubs
         {
             //await Clients.GroupExcept(groupName, connnectionIds).SendAsync("receiveMessage",message);
             //GroupExcept
-            await Clients.Groups(groups).SendAsync("receiveMessage",message);
+            await Clients.Groups(groups).SendAsync("receiveMessage", message);
 
         }
 
