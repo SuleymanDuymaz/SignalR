@@ -19,11 +19,12 @@ namespace SıgnalRServerExample.Hubs
         }
         */
 
-        public async Task SendMessageAsync(string message,string groupName,IEnumerable<string> connnectionIds)
+        public async Task SendMessageAsync(string message,IEnumerable<string> groups)
         {
-            await Clients.GroupExcept(groupName, connnectionIds).SendAsync("receiveMessage",message);
+            //await Clients.GroupExcept(groupName, connnectionIds).SendAsync("receiveMessage",message);
             //GroupExcept
-            
+            await Clients.Groups(groups).SendAsync("receiveMessage",message);
+
         }
 
         public  async Task addGroup(string connectionId,string groupName)
